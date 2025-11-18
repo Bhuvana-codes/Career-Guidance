@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Career Guidance</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .back-btn {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.5rem;
+      background: #e0c9b1;
+      color: #5d432c;
+      border: none;
+      border-radius: 1.2rem;
+      padding: 0.6rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(93,67,44,0.12);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      z-index: 9999;
+    }
+    .back-btn:hover, .back-btn:focus {
+      background: #a47551;
+      color: #f5eee6;
+      box-shadow: 0 4px 18px #bca89f;
+    }
+    @media (max-width: 650px) {
+      .back-btn {
+        top: 0.8rem;
+        left: 0.5rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.97rem;
+      }
+    }
+    /* Cozy Modal Styles */
+    .popup-modal-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(93,67,44,0.12);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.17s;
+    }
+    .popup-modal {
+      background: #fffdfa;
+      border: 2.5px solid #e0c9b1;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px #d0bfa544;
+      padding: 2.1rem 2.3rem 1.5rem 2.3rem;
+      min-width: 270px;
+      max-width: 92vw;
+      text-align: center;
+      font-size: 1.12rem;
+      color: #5d432c;
+      font-family: 'Poppins', 'EB Garamond', serif;
+      animation: popIn 0.19s;
+    }
+    .popup-modal .modal-title {
+      color: #a47551;
+      font-size: 1.22em;
+      font-weight: bold;
+      margin-bottom: 0.6rem;
+      font-family: 'Pacifico', cursive;
+      letter-spacing: 1.5px;
+    }
+    .popup-modal .modal-btn {
+      margin-top: 1.3rem;
+      background: #e0c9b1;
+      color: #5d432c;
+      border: none;
+      border-radius: 1.2rem;
+      padding: 0.55rem 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #e0c9b1aa;
+      transition: background 0.18s, color 0.18s;
+    }
+    .popup-modal .modal-btn:hover, .popup-modal .modal-btn:focus {
+      background: #a47551;
+      color: #fffdfa;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes popIn { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body>
+  <!-- Back button for top left -->
+  <button class="back-btn" onclick="window.history.back()">← Back</button>
+  <h1>Career Recommendation</h1>
+  <form id="recommendationForm">
+    <label>
+      Interests/Skills (select one or more):<br>
+      <div id="interests_skills_group" class="checkbox-group">
+        <label><input type="checkbox" name="interests_skills" value="Programming"> Programming</label>
+        <label><input type="checkbox" name="interests_skills" value="Data Analysis"> Data Analysis</label>
+        <label><input type="checkbox" name="interests_skills" value="Content Writing"> Content Writing</label>
+        <label><input type="checkbox" name="interests_skills" value="Public Speaking"> Public Speaking</label>
+        <label><input type="checkbox" name="interests_skills" value="Digital Marketing"> Digital Marketing</label>
+        <label><input type="checkbox" name="interests_skills" value="Graphic Design"> Graphic Design</label>
+        <label><input type="checkbox" name="interests_skills" value="Creativity"> Creativity</label>
+        <label><input type="checkbox" name="interests_skills" value="Project Management"> Project Management</label>
+        <label><input type="checkbox" name="interests_skills" value="Networking"> Networking</label>
+        <label><input type="checkbox" name="interests_skills" value="Healthcare Skills"> Healthcare Skills</label>
+        <label><input type="checkbox" name="interests_skills" value="Communication"> Communication</label>
+      </div>
+    </label>
+    <br><br>
+    <label>
+      Education Level:
+      <select id="education_level" required>
+        <option value="High School">High School</option>
+        <option value="Bachelor's Degree">Bachelor's Degree</option>
+        <option value="Master's Degree">Master's Degree</option>
+      </select>
+    </label><br><br>
+    <button type="submit">Get Recommendation</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    // Animate form fields: fade in like ink after card unfolds
+    window.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('recommendationForm');
+      const labels = Array.from(form.querySelectorAll('label'));
+      const selects = Array.from(form.querySelectorAll('select, button'));
+      setTimeout(() => {
+        labels.forEach((el, i) => setTimeout(() => el.classList.add('inked'), 400 + i*120));
+        selects.forEach((el, i) => setTimeout(() => el.classList.add('inked'), 900 + i*170));
+      }, 700);
+    });
+
+    // Cozy Modal Logic
+    function showCozyModal(title, message) {
+      const existing = document.querySelector('.popup-modal-bg');
+      if (existing) existing.remove();
+
+      const bg = document.createElement('div');
+      bg.className = 'popup-modal-bg';
+
+      const box = document.createElement('div');
+      box.className = 'popup-modal';
+
+      const t = document.createElement('div');
+      t.className = 'modal-title';
+      t.textContent = title;
+      box.appendChild(t);
+
+      const msg = document.createElement('div');
+      msg.innerHTML = message;
+      box.appendChild(msg);
+
+      const btn = document.createElement('button');
+      btn.className = 'modal-btn';
+      btn.textContent = 'Okay!';
+      btn.onclick = () => bg.remove();
+      box.appendChild(btn);
+
+      bg.appendChild(box);
+      document.body.appendChild(bg);
+    }
+
+    // Form validation: at least one interest/skill must be checked
+    document.getElementById('recommendationForm').addEventListener('submit', function(e) {
+      const checked = document.querySelectorAll('input[name="interests_skills"]:checked');
+      if (checked.length === 0) {
+        e.preventDefault();
+        showCozyModal(
+          "Oops! 🌰",
+          "Please select <b>at least one</b> interest or skill before getting a recommendation.<br><span style='font-size:1.1em;color:#a47551;'>Let us know what you like—your career genie is listening!</span>"
+        );
+        return false;
+      }
+      // Normal submission otherwise
+    });
+  </script>
+  <script src="recommend.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Cozy Beige & Brown</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --beige: #f9f6f1;
+      --brown: #7d5a4e;
+      --brown-dark: #4e2e1e;
+      --brown-light: #bca89f;
+      --accent: #f2c299;
+      --white: #fffdf9;
+      --shadow: 0 4px 24px rgba(125, 90, 78, 0.14);
+      --danger: #e57373;
+    }
+    body {
+      margin: 0;
+      background: var(--beige);
+      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      color: var(--brown-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .admin-header {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(90deg, var(--beige) 70%, var(--accent));
+      border-bottom: 2px solid var(--brown-light);
+      box-shadow: var(--shadow);
+      padding: 2rem 0 1rem 0;
+    }
+    .admin-header h1 {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      color: var(--brown);
+      text-align: center;
+      width: 100%;
+    }
+    .logout-btn {
+      background: var(--brown);
+      color: var(--beige);
+      border: none;
+      border-radius: 30px;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #e5d3c0;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      margin: 2rem auto;
+      display: block;
+    }
+    .logout-btn:hover, .logout-btn:focus {
+      background: var(--brown-dark);
+      color: var(--accent);
+      box-shadow: 0 4px 16px #bca89f;
+    }
+    .back-btn {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.5rem;
+      background: #e0c9b1;
+      color: #5d432c;
+      border: none;
+      border-radius: 1.2rem;
+      padding: 0.6rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(93,67,44,0.12);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      z-index: 9999;
+    }
+    .back-btn:hover, .back-btn:focus {
+      background: #a47551;
+      color: #f5eee6;
+      box-shadow: 0 4px 18px #bca89f;
+    }
+    .stats-bar {
+      background: var(--white);
+      margin: 2rem 0 1.5rem 0;
+      padding: 1.2rem 2rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      display: flex;
+      gap: 2.5rem;
+      font-size: 1.18rem;
+      font-weight: 500;
+      justify-content: center;
+      width: 80vw;
+      max-width: 900px;
+    }
+    .stats-bar span {
+      color: var(--brown-dark);
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+    .admin-table-container {
+      width: 90vw;
+      max-width: 950px;
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 2rem 1.5rem 2.5rem 1.5rem;
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.07rem;
+    }
+    th, td {
+      padding: 1rem 0.75rem;
+      text-align: left;
+    }
+    th {
+      background: var(--brown-light);
+      color: var(--brown-dark);
+      font-weight: bold;
+      border-bottom: 2px solid var(--brown);
+      font-size: 1.08rem;
+      letter-spacing: 1px;
+    }
+    tr:nth-child(even) td {
+      background: #f5ede6;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    td {
+      border-bottom: 1px solid var(--brown-light);
+      vertical-align: middle;
+    }
+    .user-actions {
+      text-align: center;
+    }
+    .action-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 0.5rem 1.1rem;
+      margin: 0 0.12rem;
+      font-size: 1rem;
+      font-weight: 500;
+      box-shadow: 0 2px 10px #e5d3c0;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    }
+    .deactivate-btn {
+      background: #f6bda1;
+      color: var(--brown-dark);
+    }
+    .deactivate-btn:hover, .deactivate-btn:focus {
+      background: #e57a5f;
+      color: var(--white);
+    }
+    .activate-btn {
+      background: #b3eeb7;
+      color: var(--brown-dark);
+    }
+    .activate-btn:hover, .activate-btn:focus {
+      background: #47b37d;
+      color: var(--white);
+    }
+    .delete-btn {
+      background: var(--danger);
+      color: var(--white);
+    }
+    .delete-btn:hover, .delete-btn:focus {
+      background: #b71c1c;
+      color: var(--accent);
+    }
+    .action-btn[disabled] {
+      background: #e0ddd4;
+      color: #baa896;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    /* Custom modal/popup */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(125, 90, 78, 0.20);
+      z-index: 101;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.23s;
+    }
+    .modal-box {
+      background: var(--beige);
+      border: 2px solid var(--brown-light);
+      border-radius: 18px;
+      box-shadow: 0 6px 32px #bca89f60;
+      padding: 2.2rem 2rem 1.5rem 2rem;
+      min-width: 320px;
+      max-width: 90vw;
+      text-align: center;
+      font-size: 1.14rem;
+      color: var(--brown-dark);
+      animation: popIn 0.19s;
+    }
+    .modal-box strong {
+      color: var(--brown);
+      font-size: 1.22em;
+    }
+    .modal-buttons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.3rem;
+    }
+    .modal-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 0.55rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      background: var(--brown);
+      color: var(--beige);
+    }
+    .modal-btn.cancel {
+      background: #e0ddd4;
+      color: var(--brown-dark);
+    }
+    .modal-btn.danger {
+      background: var(--danger);
+      color: var(--white);
+    }
+    .modal-btn:hover, .modal-btn:focus {
+      background: var(--brown-dark);
+      color: var(--accent);
+    }
+    .modal-btn.cancel:hover, .modal-btn.cancel:focus {
+      background: #ae9f93;
+      color: var(--beige);
+    }
+    .modal-btn.danger:hover, .modal-btn.danger:focus {
+      background: #b71c1c;
+      color: var(--accent);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes popIn {
+      from { transform: scale(0.93); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @media (max-width: 700px) {
+      .admin-header { padding: 1.3rem 0.5rem 0.7rem 0.5rem; }
+      .stats-bar { flex-direction: column; gap: 1rem; width: 95vw; }
+      .admin-table-container { width: 99vw; padding: 1rem 0.1rem 1.5rem 0.1rem; }
+      th, td { padding: 0.7rem 0.4rem; font-size: 0.99rem; }
+      .modal-box { padding: 1.5rem 0.5rem 0.9rem 0.5rem; }
+      .logout-btn { width: 90vw; }
+      .back-btn {
+        top: 0.8rem;
+        left: 0.5rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.97rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cozy Back Button -->
+  <button class="back-btn" onclick="window.history.back()">← Back</button>
+  <div class="admin-header">
+    <h1>Admin Dashboard</h1>
+  </div>
+  <div class="stats-bar">
+    <div><span id="total-users">0</span> Total Users</div>
+    <div><span id="new-users">0</span> New (7d)</div>
+    <div><span id="active-users">0</span> Active</div>
+  </div>
+  <div class="admin-table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="user-table-body">
+        <!-- Populated by JS -->
+      </tbody>
+    </table>
+  </div>
+  <button class="logout-btn" id="logout-btn">Logout</button>
+  <!-- Modal popup will be injected here by JS -->
+
+  <script>
+    // Mock: if you haven't added active/created_at columns, comment out related code or run the ALTER TABLE command as provided earlier!
+    async function fetchUsers() {
+      try {
+        const res = await fetch('/api/users');
+        const users = await res.json();
+        window.realUsers = users;
+        renderTable();
+        updateStats();
+      } catch (err) {
+        showModal("Failed to load users: " + err.message, [
+          { text: "Okay", action: closeModal, class: "" }
+        ]);
+      }
+    }
+
+    function updateStats() {
+      const users = window.realUsers || [];
+      document.getElementById('total-users').textContent = users.length;
+      // New users: joined in last 7 days
+      const now = new Date();
+      const oneWeekAgo = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+      let newCount = 0, activeCount = 0;
+      users.forEach(u => {
+        if (u.joined && new Date(u.joined) >= oneWeekAgo) newCount++;
+        if (u.active && (u.active === 1 || u.active === true)) activeCount++;
+      });
+      document.getElementById('new-users').textContent = newCount;
+      document.getElementById('active-users').textContent = activeCount;
+    }
+
+    function renderTable() {
+      const users = window.realUsers || [];
+      const tbody = document.getElementById('user-table-body');
+      tbody.innerHTML = '';
+      users.forEach((user, idx) => {
+        let isActive = user.active === undefined ? true : (user.active === 1 || user.active === true);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>
+            <span style="padding: 0.3em 1em; border-radius: 16px; background: ${isActive ? '#b3eeb7' : '#f6bda1'}; color: ${isActive ? '#21432b' : '#8e2c13'};">
+              ${isActive ? 'Active' : 'Inactive'}
+            </span>
+          </td>
+          <td class="user-actions">
+            <button class="action-btn ${isActive ? 'deactivate-btn' : 'activate-btn'}" data-idx="${idx}">
+              ${isActive ? 'Deactivate' : 'Activate'}
+            </button>
+            <button class="action-btn delete-btn" data-del-idx="${idx}">
+              Delete
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Attach handlers for action buttons
+      document.querySelectorAll('.deactivate-btn, .activate-btn').forEach(btn => {
+        btn.onclick = handleActivateDeactivate;
+      });
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.onclick = handleDeleteUser;
+      });
+    }
+
+    function handleActivateDeactivate(e) {
+      const idx = e.target.getAttribute('data-idx');
+      const user = window.realUsers[idx];
+      const isActive = user.active === undefined ? true : (user.active === 1 || user.active === true);
+
+      showModal(
+        `<strong>${isActive ? 'Deactivate' : 'Activate'} User</strong><br><br>
+        Are you sure you want to ${isActive ? 'deactivate' : 'activate'} <b>${user.name}</b> (${user.email})?`,
+        [
+          { text: "Cancel", action: closeModal, class: "cancel" },
+          { text: isActive ? "Deactivate" : "Activate", action: () => confirmStatusChange(idx, !isActive), class: "" }
+        ]
+      );
+    }
+
+    function confirmStatusChange(idx, activate) {
+      closeModal();
+      if (window.realUsers[idx]) window.realUsers[idx].active = activate ? 1 : 0;
+      renderTable();
+      updateStats();
+      showModal(
+        `<strong>User ${activate ? 'Activated' : 'Deactivated'}!</strong>`,
+        [{ text: "Okay", action: closeModal, class: "" }]
+      );
+    }
+
+    function handleDeleteUser(e) {
+      const idx = e.target.getAttribute('data-del-idx');
+      const user = window.realUsers[idx];
+      showModal(
+        `<strong>Delete User</strong><br><br>
+        Are you absolutely sure you want to <b style="color:var(--danger)">delete</b> <b>${user.name}</b> (${user.email})?<br>
+        This action cannot be undone!`,
+        [
+          { text: "Cancel", action: closeModal, class: "cancel" },
+          { text: "Delete", action: () => confirmDeleteUser(idx), class: "danger" }
+        ]
+      );
+    }
+
+    function confirmDeleteUser(idx) {
+      closeModal();
+      // In real app, call API to delete. Here, just remove from array for demo:
+      window.realUsers.splice(idx, 1);
+      renderTable();
+      updateStats();
+      showModal(
+        `<strong>User deleted!</strong>`,
+        [{ text: "Okay", action: closeModal, class: "" }]
+      );
+    }
+
+    // LOGOUT FEATURE
+    document.getElementById('logout-btn').onclick = function() {
+      showModal(
+        `<strong>Logout</strong><br><br>
+        Are you <span style="color:var(--danger);font-weight:600;">really</span> sure you want to log out?<br>
+        <span style="font-style:italic; color:var(--brown); display:block; margin-top:12px;">
+          Please don't leave us alone in this cozy dashboard... <br>
+          Who will keep the users safe and warm? 🌰☕️
+        </span>`,
+        [
+          { text: "No, I'll stay!", action: closeModal, class: "cancel" },
+          { text: "Yes, logout", action: doLogout, class: "" }
+        ]
+      );
+    };
+
+   function doLogout() {
+    closeModal();
+    showModal(
+      `<strong>Logged Out</strong><br>
+      <span style="color:var(--brown-dark)">
+        We'll be right here waiting for you. <br>
+        Come back soon, okay? 💛
+      </span>`,
+      [{ text: "Okay", action: () => { window.location.href = "https://www.google.com"; }, class: "" }]
+    );
+  }
+
+    // MODAL/POPUP LOGIC
+    function showModal(message, buttons=[]) {
+      closeModal(); // Remove any existing
+      const backdrop = document.createElement('div');
+      backdrop.className = 'modal-backdrop';
+      const box = document.createElement('div');
+      box.className = 'modal-box';
+      box.innerHTML = message;
+      if (buttons && buttons.length) {
+        const btns = document.createElement('div');
+        btns.className = 'modal-buttons';
+        buttons.forEach(obj => {
+          const btn = document.createElement('button');
+          btn.textContent = obj.text;
+          btn.className = 'modal-btn ' + (obj.class || '');
+          btn.onclick = obj.action;
+          btns.appendChild(btn);
+        });
+        box.appendChild(btns);
+      }
+      backdrop.appendChild(box);
+      backdrop.onclick = function(e) {
+        if (e.target === backdrop && buttons.length === 1 && buttons[0].class === "cancel") closeModal();
+      }
+      document.body.appendChild(backdrop);
+    }
+    function closeModal() {
+      const m = document.querySelector('.modal-backdrop');
+      if (m) m.remove();
+    }
+
+    // On page load
+    fetchUsers();
+  </script>
+  <script src="chatbot.js"></script>
+</body>
+</html>

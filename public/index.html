@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Career Quest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <!-- Modern, friendly sans-serif font and a display font for headings -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brown-dark: #4a2f1b;
+      --brown-medium: #a47551;
+      --brown-light: #e0c9b1;
+      --beige: #f8f4ed;
+      --beige-2: #f5eee6;
+      --beige-pop: #f2e4d4;
+      --brown-accent: #7c5832;
+      --glass: rgba(254, 250, 242, 0.82);
+      --glass-border: rgba(164, 117, 81, 0.13);
+      --shadow: 0 8px 32px 0 rgba(93, 67, 44, 0.10);
+      --accent-gradient: linear-gradient(92deg, #a47551 0%, #e0c9b1 100%);
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      width: 100vw;
+      background: radial-gradient(ellipse at 70% 30%, var(--beige) 0%, var(--beige-2) 55%, var(--brown-light) 100%);
+      font-family: 'Quicksand', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+    .main-card {
+      background: var(--glass);
+      border-radius: 2.6rem;
+      box-shadow: var(--shadow);
+      border: 2.5px solid var(--glass-border);
+      padding: 52px 38px 40px 38px;
+      max-width: 420px;
+      min-width: 330px;
+      width: 94vw;
+      margin: 44px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      backdrop-filter: blur(2px);
+    }
+    .main-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 2.35rem;
+      margin: 0 0 15px 0;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .main-card .subtitle {
+      color: var(--brown-accent);
+      font-size: 1.19rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+      margin-top: 12px;
+    }
+    .cta-btn {
+      width: 100%;
+      padding: 15px 0;
+      font-family: 'Quicksand', Arial, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border-radius: 1.7rem;
+      border: none;
+      background: var(--accent-gradient);
+      color: #fff;
+      box-shadow: 0 2px 12px var(--glass-border);
+      transition: background 0.16s, color 0.16s, transform 0.13s, box-shadow 0.2s;
+      cursor: pointer;
+      letter-spacing: 1.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8em;
+      outline: none;
+    }
+    .cta-btn i {
+      font-size: 1.1em;
+    }
+    .cta-btn:hover, .cta-btn:focus {
+      background: linear-gradient(92deg, #7c5832 0%, #a47551 100%);
+      color: var(--beige);
+      transform: scale(1.025);
+      box-shadow: 0 4px 18px var(--glass-border);
+    }
+    .more-link {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 1.02rem;
+      color: var(--brown-accent);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      opacity: 0.82;
+      text-decoration: underline dotted;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .more-link:hover {
+      color: var(--brown-dark);
+      opacity: 1;
+    }
+    @media (max-width: 550px) {
+      .main-card {
+        padding: 30px 10px 26px 10px;
+        max-width: 98vw;
+        min-width: unset;
+      }
+      .main-card h1 {
+        font-size: 1.58rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-card">
+    <h1>Career Quest</h1>
+    <div class="subtitle">Embark on your growth adventure.<br/>A new journey starts here.</div>
+    <div class="cta-group">
+      <button class="cta-btn" onclick="window.location.href='login.html'">
+        <i class="fa fa-sign-in-alt"></i>
+        Log In
+      </button>
+      <button class="cta-btn" onclick="window.location.href='register.html'">
+        <i class="fa fa-user-plus"></i>
+        Join the Quest
+      </button>
+    </div>
+    <div class="more-link" onclick="window.location.href='about.html'">
+      <i class="fa fa-info-circle"></i> Learn more
+    </div>
+  </div>
+   <script src="chatbot.js"></script>
+</body>
+</html>

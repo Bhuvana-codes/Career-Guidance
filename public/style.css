@@ -1,0 +1,239 @@
+/* === Vintage Paper Background === */
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'EB Garamond', 'Georgia', serif;
+  background: #f6f1e7 url('paper-fibers.png');
+  background-size: auto;
+  background-repeat: repeat;
+  transition: background 0.6s;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* === Page Heading === */
+h1 {
+  text-align: center;
+  font-family: 'EB Garamond', 'Georgia', serif;
+  font-size: 2.7rem;
+  font-weight: 700;
+  margin-top: 44px;
+  color: #7b5a36;
+  letter-spacing: 0.07em;
+  text-shadow: 0 2px 8px #e2d2b7cc, 0 1px 0 #fff2e1;
+}
+
+/* === Compass/Graduation Hat Icon === */
+.corner-icon {
+  position: fixed;
+  top: 25px;
+  left: 30px;
+  font-size: 2.7rem;
+  color: #cfb386;
+  filter: drop-shadow(0 2px 10px #9e7952bb);
+  z-index: 100;
+  animation: pulse 2.3s infinite;
+  user-select: none;
+  pointer-events: none;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1);}
+  50% { transform: scale(1.10);}
+}
+
+@media (max-width: 600px) {
+  .corner-icon { font-size: 2rem; left: 8px; top: 8px;}
+}
+
+/* === Form Card (Vintage Letter/Sticky Note) === */
+#recommendationForm {
+  max-width: 420px;
+  margin: 60px auto 25px auto;
+  background: rgba(251,247,238, 0.93);
+  border-radius: 22px 22px 18px 18px;
+  box-shadow: 0 12px 36px 0 #7b5a3633, 0 1px 0 #fff9ee;
+  border: 2.5px solid #e2cfb1;
+  padding: 46px 34px 36px 34px;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  font-family: 'EB Garamond', 'Georgia', serif;
+  /* Unfold animation */
+  transform: scaleY(0) translateY(-40px);
+  opacity: 0;
+  animation: unfoldCard 1.1s cubic-bezier(.21,.72,.58,1.01) 0.10s forwards;
+}
+@keyframes unfoldCard {
+  to {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Pin effect (like sticky note pin) */
+#recommendationForm::before {
+  content: "";
+  position: absolute;
+  top: 16px; left: 50%;
+  transform: translateX(-50%);
+  width: 23px; height: 23px;
+  background: radial-gradient(circle at 60% 50%, #f9ddae 70%, #c2a16c 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px #d1bc8c, 0 2px 12px 0 #bba06344;
+  z-index: 3;
+}
+
+/* === Form Labels/Inputs === */
+#recommendationForm label {
+  display: block;
+  font-size: 1.18rem;
+  color: #7b5a36;
+  margin-bottom: 9px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  opacity: 0;
+}
+
+#recommendationForm select, #recommendationForm button {
+  font-family: inherit;
+  font-size: 1.08rem;
+  background: rgba(255,251,240,0.93);
+  border: 2px solid #d9c7a4;
+  border-radius: 14px;
+  margin-top: 6px;
+  margin-bottom: 17px;
+  padding: 11px 12px;
+  width: 100%;
+  outline: none;
+  color: #6e4f29;
+  box-shadow: 0 2px 8px #e2d2b740;
+  transition: border 0.16s, box-shadow 0.18s, background 0.19s;
+  opacity: 0;
+}
+
+#recommendationForm select[multiple] {
+  min-height: 98px;
+  background: rgba(253,251,241,0.97);
+  border-radius: 14px;
+  font-size: 1.05rem;
+}
+
+#recommendationForm button {
+  font-size: 1.18rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #f7e3a7 70%, #e8cda1 100%);
+  color: #7b5a36;
+  box-shadow: 0 4px 20px #7b5a362a;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  border-width: 2.5px;
+  cursor: pointer;
+}
+
+#recommendationForm button:hover,
+#recommendationForm button:focus {
+  background: linear-gradient(90deg, #f0d393 60%, #e7c38d 100%);
+  box-shadow: 0 0 16px 3px #f7e3a7aa, 0 8px 28px #b09a6b33;
+  color: #a67832;
+  outline: 2px solid #c2a16c44;
+  transition: 0.18s;
+}
+
+/* Candlelight hover for inputs */
+#recommendationForm select:hover, #recommendationForm select:focus {
+  border: 2px solid #e0c17f;
+  box-shadow: 0 0 10px 3px #f7e3a770;
+  background: #fff8e8;
+}
+
+/* === Ink-appear Animation for Inputs & Labels === */
+@keyframes inkAppear {
+  from { opacity: 0; transform: translateY(18px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+#recommendationForm .inked {
+  animation: inkAppear 0.8s cubic-bezier(.22,.69,.4,1.04) forwards;
+  opacity: 1 !important;
+}
+
+/* === Result Page Cards === */
+.career-card {
+  background: rgba(251,247,238, 0.97);
+  border-radius: 17px;
+  border: 2.5px solid #e2cfb1;
+  box-shadow: 0 8px 28px 0 #7b5a3622, 0 1px 0 #fff9ee;
+  margin: 24px auto;
+  padding: 28px 27px 22px 27px;
+  max-width: 500px;
+  font-family: 'EB Garamond', 'Georgia', serif;
+  color: #715b36;
+  position: relative;
+  transition: box-shadow 0.18s;
+}
+
+.career-card:hover {
+  box-shadow: 0 0 20px 4px #ffebbccc, 0 12px 40px #d1bc8c33;
+  border-color: #e0c17f;
+}
+
+/* Resource links */
+.career-card a {
+  color: #a67832;
+  font-weight: 600;
+  text-decoration: underline dotted;
+  transition: color 0.18s, text-shadow 0.19s;
+}
+.career-card a:hover {
+  color: #d1a954;
+  text-shadow: 0 2px 8px #f7e3a7cc;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+  #recommendationForm, .career-card {
+    padding: 16px 7px 14px 7px;
+    max-width: 99vw;
+  }
+  h1 { font-size: 1.5rem; margin-top: 18px;}
+}
+
+/* === Result Page text fallback === */
+#careerResults, #result {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 1.18rem;
+  color: #82643b;
+  font-family: 'EB Garamond', 'Georgia', serif;
+}
+
+/* --- Checkbox group styling for interests/skills --- */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  max-height: 132px;
+  overflow-y: auto;
+  background: rgba(255,251,240,0.92);
+  border-radius: 10px;
+  border: 2px solid #d9c7a4;
+  padding: 14px 12px;
+  margin: 12px 0 24px 0;
+}
+.checkbox-group label {
+  min-width: 180px;
+  font-size: 1.09rem;
+  color: #6e4f29;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.checkbox-group input[type="checkbox"] {
+  accent-color: #c3a369;
+  width: 17px;
+  height: 17px;
+}

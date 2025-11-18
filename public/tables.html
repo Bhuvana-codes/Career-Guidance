@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Database Tables | Career Genie Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico:wght@700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brown-dark: #5d432c;
+      --brown-medium: #a47551;
+      --brown-light: #e0c9b1;
+      --beige: #f5eee6;
+      --beige-pop: #f2e4d4;
+      --white: #fff;
+      --brown-shadow: rgba(93,67,44,0.10);
+    }
+    body {
+      background: linear-gradient(120deg, var(--beige), var(--white) 70%, var(--brown-light) 100%);
+      font-family: 'Poppins', Arial, sans-serif;
+      color: var(--brown-dark);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .main-title {
+      font-family: 'Pacifico', cursive;
+      text-align: center;
+      font-size: 2.3rem;
+      color: #5d432c;
+      letter-spacing: 2.5px;
+      margin-top: 2.3rem;
+      margin-bottom: 1.4rem;
+      background: none;
+      padding: 0;
+      border: none;
+      max-width: 97vw;
+      word-break: break-word;
+      -webkit-font-smoothing: antialiased;
+    }
+    .table-schema-card {
+      background: #fffdfa;
+      border-radius: 1.3rem;
+      box-shadow: 0 2px 12px #d0bfa544;
+      padding: 1.1rem 1.3rem 1.1rem 1.3rem;
+      margin-bottom: 2.5rem;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      border: 2px solid #e0c9b1;
+    }
+    .schema-title {
+      font-weight: 700;
+      color: #a47551;
+      font-size: 1.22rem;
+      margin-bottom: 0.6rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    .schema-code {
+      background: #f5eee6;
+      padding: 0.7rem 0.9rem;
+      border-radius: 0.7rem;
+      font-family: "Fira Mono", "Consolas", monospace;
+      font-size: 0.98rem;
+      color: #5d432c;
+      white-space: pre-wrap;
+      margin-bottom: 1.1rem;
+    }
+    .data-table-title {
+      font-weight: 600;
+      color: #7c5832;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+      margin-top: 0.7rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--beige);
+      border-radius: 0.8rem;
+      overflow: hidden;
+      box-shadow: 0 2px 8px var(--brown-shadow);
+      margin-bottom: 1.3rem;
+      font-size: 0.99rem;
+    }
+    table.data-table th, table.data-table td {
+      padding: 0.55rem 0.7rem;
+      text-align: left;
+      border-bottom: 1px solid var(--brown-light);
+      word-break: break-word;
+    }
+    table.data-table th {
+      background: var(--brown-light);
+      color: var(--brown-dark);
+      font-weight: bold;
+      font-size: 1.01rem;
+    }
+    table.data-table tr:last-child td {
+      border-bottom: none;
+    }
+    .back-btn {
+      background: #e0c9b1;
+      color: #5d432c;
+      border: none;
+      border-radius: 1.2rem;
+      padding: 0.6rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px #d0bfa544;
+      cursor: pointer;
+      margin: 2rem 0 0.7rem 0;
+      align-self: flex-start;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+    }
+    .back-btn:hover, .back-btn:focus {
+      background: #a47551;
+      color: #f5eee6;
+      box-shadow: 0 4px 18px #bca89f;
+    }
+    @media (max-width: 700px) {
+      .main-title { font-size: 1.3rem; margin-top: 1rem;}
+      .table-schema-card { padding: 0.5rem 0.2rem 0.8rem 0.2rem; max-width: 98vw;}
+      .schema-title { font-size: 1.02rem;}
+    }
+  </style>
+</head>
+<body>
+  <button class="back-btn" onclick="window.history.back()">← Back</button>
+  <div class="main-title">Database Tables</div>
+  
+  <!-- User Table -->
+  <div class="table-schema-card">
+    <div class="schema-title">users</div>
+    <div class="schema-code">CREATE TABLE users (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100),
+  email VARCHAR(100) UNIQUE,
+  password VARCHAR(100),
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  active TINYINT(1) DEFAULT 1
+);</div>
+    <div class="data-table-title">Sample Data:</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>email</th>
+          <th>password</th>
+          <th>created_at</th>
+          <th>active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Alice</td><td>alice@email.com</td><td>••••••••</td><td>2024-05-01 09:15:00</td><td>1</td></tr>
+        <tr><td>2</td><td>Bob</td><td>bob@email.com</td><td>••••••••</td><td>2024-05-03 15:13:12</td><td>1</td></tr>
+        <tr><td>3</td><td>Charlie</td><td>charlie@email.com</td><td>••••••••</td><td>2024-05-10 11:22:45</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Career Info Table -->
+  <div class="table-schema-card">
+    <div class="schema-title">career_info</div>
+    <div class="schema-code">-- Each row describes a career, its salary range, and links to resources
+career_name VARCHAR(50) PRIMARY KEY,
+description TEXT,
+average_salary VARCHAR(30),
+resources TEXT
+</div>
+    <div class="data-table-title">Sample Data:</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>career_name</th>
+          <th>description</th>
+          <th>average_salary</th>
+          <th>resources</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Content Strategist</td>
+          <td>Plans, writes, and manages content strategies for various platforms.</td>
+          <td>$55,000 - $85,000/year</td>
+          <td>
+            <a href="https://www.coursera.org/learn/content-marketing" target="_blank">Content Marketing (Coursera)</a><br>
+            <a href="https://www.reddit.com/r/NewTubers/comments/1f3ao3m/what_is_youtube_strategist_job_roadmap_to_become/" target="_blank">YouTube Strategist Roadmap</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Data Scientist</td>
+          <td>Analyzes large datasets to extract insights and support decision-making.</td>
+          <td>$90,000 - $130,000/year</td>
+          <td>
+            <a href="https://www.coursera.org/courses?query=data+science" target="_blank">Data Science (Coursera)</a><br>
+            <a href="https://www.youtube.com/watch?v=GhFgnkLPZj4" target="_blank">What is Data Science? (YouTube)</a>
+          </td>
+        </tr>
+        <tr>
+          <td>Digital Marketing Specialist</td>
+          <td>Responsible for planning and executing online marketing strategies.</td>
+          <td>$60,000 - $80,000/year</td>
+          <td>
+            <a href="https://www.coursera.org/professional-certificates/google-digital-marketing-ecommerce" target="_blank">Google Digital Marketing & E-commerce</a><br>
+            <a href="https://www.youtube.com/watch?v=39Rd33DW4lI" target="_blank">Digital Marketing Career (YouTube)</a>
+          </td>
+        </tr>
+        <!-- Add more sample rows as needed -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Recommendation Table -->
+  <div class="table-schema-card">
+    <div class="schema-title">recommendation</div>
+    <div class="schema-code">CREATE TABLE recommendation (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  interests_skills VARCHAR(255),
+  education_level VARCHAR(50),
+  preferred_career VARCHAR(100)
+);</div>
+    <div class="data-table-title">Sample Data:</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>interests_skills</th>
+          <th>education_level</th>
+          <th>preferred_career</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Programming, Data Analysis</td><td>Bachelor's Degree</td><td>Software Developer</td></tr>
+        <tr><td>2</td><td>Digital Marketing, Content Writing</td><td>High School</td><td>Digital Marketing Specialist</td></tr>
+        <tr><td>3</td><td>Graphic Design, Creativity</td><td>High School</td><td>UI/UX Designer</td></tr>
+        <tr><td>4</td><td>Data Analysis, Programming</td><td>Bachelor's Degree</td><td>Data Scientist</td></tr>
+        <tr><td>5</td><td>Content Writing, Public Speaking</td><td>Bachelor's Degree</td><td>Content Strategist</td></tr>
+        <tr><td>6</td><td>Project Management, Networking</td><td>Master's Degree</td><td>Project Manager</td></tr>
+        <tr><td>7</td><td>Networking, Engineering Skills</td><td>Bachelor's Degree</td><td>Network Engineer</td></tr>
+        <tr><td>8</td><td>Public Speaking, Content Writing</td><td>High School</td><td>Motivational Speaker</td></tr>
+        <tr><td>9</td><td>Engineering Skills, Programming</td><td>Bachelor's Degree</td><td>Mechanical Engineer</td></tr>
+        <tr><td>10</td><td>Healthcare Skills, Communication</td><td>Master's Degree</td><td>Nurse Practitioner</td></tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- (Add additional tables below as you wish, in same style) -->
+   <script src="chatbot.js"></script>
+</body>
+</html>

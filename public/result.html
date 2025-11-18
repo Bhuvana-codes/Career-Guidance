@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Career Results</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .back-btn {
+      position: absolute;
+      top: 1.8rem;
+      left: 1.5rem;
+      background: #e0c9b1;
+      color: #5d432c;
+      border: none;
+      border-radius: 1.2rem;
+      padding: 0.6rem 1.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(93,67,44,0.12);
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      z-index: 9999;
+    }
+    .back-btn:hover, .back-btn:focus {
+      background: #a47551;
+      color: #f5eee6;
+      box-shadow: 0 4px 18px #bca89f;
+    }
+    @media (max-width: 650px) {
+      .back-btn {
+        top: 0.8rem;
+        left: 0.5rem;
+        padding: 0.5rem 1.2rem;
+        font-size: 0.97rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back button for top left -->
+  <button class="back-btn" onclick="window.history.back()">← Back</button>
+
+  <h1>Your Career Recommendations</h1>
+  <div id="careerResults"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const dataParam = params.get('data');
+    const resultDiv = document.getElementById('careerResults');
+
+    if (dataParam === 'none') {
+      resultDiv.textContent = 'No matching career recommendations found.';
+    } else if (dataParam === 'error') {
+      resultDiv.textContent = 'Something went wrong. Please try again.';
+    } else {
+      try {
+        const recommendations = JSON.parse(decodeURIComponent(dataParam));
+        if (!Array.isArray(recommendations) || recommendations.length === 0) {
+          resultDiv.textContent = 'No recommendations found.';
+        } else {
+          // Create HTML for each recommendation
+          const html = recommendations.map(rec => {
+            // Parse resources string into separate links
+            const resourceLinks = rec.resources
+              ? rec.resources.split(',').map(link => link.trim()).map(url => {
+                const displayText = url.includes('coursera.org') ? 'Coursera' :
+                                    url.includes('springboard.infosys.com') ? 'Infosys Springboard' :
+                                    url.includes('youtube.com') ? 'YouTube' : url;
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer">${displayText}</a>`;
+              }).join(', ')
+              : 'No resources available';
+
+            return `
+              <div class="career-card" style="border:1px solid #ccc; padding:15px; margin-bottom:15px; border-radius:8px;">
+                <h2>${rec.preferred_career}</h2>
+                <p><strong>Description:</strong> ${rec.description || 'No description available.'}</p>
+                <p><strong>Average Salary:</strong> ${rec.average_salary || 'N/A'}</p>
+                <p><strong>Resources:</strong> ${resourceLinks}</p>
+              </div>
+            `;
+          }).join('');
+          resultDiv.innerHTML = html;
+        }
+      } catch (e) {
+        console.error('Error parsing recommendations:', e);
+        resultDiv.textContent = 'Failed to load recommendations. Please try again.';
+      }
+    }
+  </script>
+  <script src="chatbot.js"></script>
+</body>
+</html>

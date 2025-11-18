@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Log In | Career Quest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+ 
+  <style>
+    :root {
+      --brown-dark: #5d432c;
+      --brown-medium: #a47551;
+      --brown-light: #e0c9b1;
+      --beige: #f5eee6;
+      --beige-light: #fdf8f3;
+      --beige-pop: #f2e4d4;
+      --brown-accent: #7c5832;
+      --brown-shadow: rgba(93,67,44,0.12);
+      --error-bg: #f7e5dd;
+      --error-border: #a75c3e;
+      --error-text: #a75c3e;
+      --success-bg: #e6f7e2;
+      --success-border: #3e9e4c;
+      --success-text: #36713a;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(120deg, var(--beige), var(--beige-light) 60%, var(--brown-light) 100%);
+      font-family: 'Poppins', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    /* Back button styling for top-left with extra space from card */
+    .back-btn-outer {
+      position: fixed;
+      top: 26px;   /* moved higher up */
+      left: 32px;  /* moved further left */
+      z-index: 22;
+    }
+    @media (max-width: 600px) {
+      .back-btn-outer {
+        top: -2px;
+        left: -2px;
+      }
+    }
+    .btn-back {
+      padding: 10px 22px 10px 16px;
+      background: linear-gradient(90deg, var(--brown-accent) 60%, var(--brown-medium));
+      color: var(--beige-light);
+      border: none;
+      border-radius: 1.5em;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px var(--brown-shadow);
+      transition: background 0.18s, color 0.18s, transform 0.13s;
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+    }
+    .btn-back i {
+      font-size: 1em;
+      margin-right: 2px;
+    }
+    .btn-back:hover, .btn-back:focus {
+      background: linear-gradient(90deg, var(--brown-medium), var(--brown-accent));
+      color: var(--brown-dark);
+      transform: scale(1.045);
+    }
+    .cozy-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--beige-pop);
+      border-radius: 2.2rem;
+      box-shadow: 0 8px 32px 0 var(--brown-shadow);
+      padding: 34px 30px 26px 30px;
+      margin: 34px 0;
+      position: relative;
+      z-index: 1;
+      border: 2.5px solid var(--brown-light);
+      transition: box-shadow 0.2s;
+    }
+    .cozy-card h2 {
+      text-align: center;
+      margin-bottom: 14px;
+      font-weight: 800;
+      color: var(--brown-dark);
+      letter-spacing: 1px;
+      font-size: 2.05rem;
+    }
+    .cozy-card .subtitle {
+      text-align: center;
+      margin-bottom: 16px;
+      color: var(--brown-accent);
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .form-group {
+      margin-bottom: 23px;
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+      color: var(--brown-accent);
+      font-size: 1.01rem;
+      letter-spacing: 0.01em;
+    }
+    .form-group input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 44px 13px 46px;
+      border-radius: 1.2rem;
+      border: 1.7px solid var(--brown-light);
+      background: var(--beige-light);
+      color: var(--brown-dark);
+      font-size: 16px;
+      font-family: inherit;
+      transition: border 0.18s, background 0.18s;
+      display: block;
+      outline: none;
+    }
+    .form-group input:focus {
+      border: 1.7px solid var(--brown-medium);
+      background: var(--beige);
+    }
+    .form-group .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 43px;
+      font-size: 18px;
+      color: var(--brown-medium);
+      pointer-events: none;
+      opacity: 0.82;
+    }
+    .input-error {
+      background: var(--error-bg);
+      color: var(--error-text);
+      border-left: 4px solid var(--error-border);
+      border-radius: 8px;
+      padding: 8px 15px;
+      margin-top: 7px;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-sizing: border-box;
+      width: 100%;
+      animation: shake 0.21s 1;
+      letter-spacing: 0.2px;
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+      100% { transform: translateX(0); }
+    }
+    .btn-journey {
+      width: 100%;
+      padding: 14px;
+      margin-top: 7px;
+      background: linear-gradient(90deg, var(--brown-medium), var(--brown-accent));
+      color: var(--beige-light);
+      border: none;
+      border-radius: 1.8rem;
+      font-size: 19px;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: 1.2px;
+      box-shadow: 0 2px 8px var(--brown-shadow);
+      transition: background 0.18s, color 0.18s, transform 0.13s;
+      outline: none;
+      position: relative;
+      z-index: 2;
+    }
+    .btn-journey:hover, .btn-journey:focus {
+      background: linear-gradient(90deg, var(--brown-accent), var(--brown-medium));
+      color: var(--beige);
+      transform: scale(1.025);
+    }
+    .login-link {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      font-size: 15px;
+      color: var(--brown-accent);
+      text-decoration: underline dashed;
+      opacity: 0.84;
+      font-weight: 600;
+    }
+    .error-message {
+      color: var(--error-text);
+      text-align: center;
+      margin-bottom: 13px;
+      font-size: 16px;
+      background: var(--error-bg);
+      border-radius: 7px;
+      padding: 8px 0;
+      border-left: 4px solid var(--error-border);
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+    .success-message {
+      color: var(--success-text);
+      text-align: center;
+      margin-bottom: 13px;
+      font-size: 16px;
+      background: var(--success-bg);
+      border-radius: 7px;
+      padding: 8px 0;
+      border-left: 4px solid var(--success-border);
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    @media (max-width: 500px) {
+      .cozy-card {
+        padding: 20px 6px 16px 6px;
+      }
+      .back-btn-outer {
+        top: -2px;
+        left: -2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back Button (top left outside the card, further up and left) -->
+  <div class="back-btn-outer">
+    <button class="btn-back" onclick="history.back()">
+      <i class="fa fa-arrow-left"></i>
+      Back
+    </button>
+  </div>
+  <div class="cozy-card">
+    <h2>Welcome Back, Pathfinder!</h2>
+    <div class="subtitle">Log in and continue your journey 🧸 </div>
+    <div id="message"></div>
+    <form id="loginForm" autocomplete="off" novalidate>
+      <div class="form-group">
+        <label for="email">Your magic email portal</label>
+        <span class="input-icon"><i class="fa fa-envelope-open-text"></i></span>
+        <input type="email" id="email" name="email" required maxlength="80" placeholder="you@journey.com" />
+        <div id="emailError"></div>
+      </div>
+      <div class="form-group">
+        <label for="password">Your secret key</label>
+        <span class="input-icon"><i class="fa fa-key"></i></span>
+        <input type="password" id="password" name="password" required minlength="6" maxlength="32" placeholder="Enter your magic password" />
+        <div id="passwordError"></div>
+      </div>
+      <button type="submit" class="btn-journey">Log In </button>
+      <a class="login-link" href="register.html"><i class="fa fa-user-plus"></i> New here? Join the Quest!</a>
+    </form>
+  </div>
+  <script src="login.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>
