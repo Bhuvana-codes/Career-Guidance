@@ -1,0 +1,1 @@
+Career Guidance System helps students explore suitable career options based on their interests, skills, and education level. Built with HTML, CSS, JavaScript, Node.js, and MySQL, it provides personalized career recommendations with descriptions, salaries, and learning resources.
